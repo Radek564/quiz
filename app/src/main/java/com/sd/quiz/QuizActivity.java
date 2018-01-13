@@ -1,13 +1,15 @@
 package com.sd.quiz;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,6 +27,10 @@ public class QuizActivity extends Activity {
     private Button mButtonChoice3;
     private Button mButtonChoice4;
     private Button mButtonQuit;
+
+    private Vibrator vibrator;
+
+    private MediaPlayer mp2;
 
     Random rnd = new Random();
 
@@ -50,19 +56,12 @@ public class QuizActivity extends Activity {
         mButtonChoice4 = (Button) findViewById(R.id.choice4);
         mButtonQuit = (Button) findViewById(R.id.quit);
 
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         updateQuestion();
         loadPref();
 
-        final Handler handler = new Handler();
-        Runnable runnableCode = new Runnable() {
-            @Override
-            public void run() {
-                highScoreView.setText("Najlepszy wynik: " + highScore);
-
-                handler.postDelayed(this, 1000);
-            }
-        };
-        handler.post(runnableCode);
+        highScoreView.setText("Najlepszy wynik: " + highScore);
 
         mButtonChoice1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -77,6 +76,8 @@ public class QuizActivity extends Activity {
                     mScore += 1;
                     updateScore(mScore);
                     mButtonChoice1.setBackgroundColor(Color.GREEN);
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+                    mp2.start();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -85,12 +86,25 @@ public class QuizActivity extends Activity {
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
                             mButtonChoice1.setBackgroundColor(Color.parseColor("#0091EA"));
+                            mp2.release();
                             updateQuestion();
                         }
-                    }, 5000);
+                    }, 3000);
 
                 } else {
                     mButtonChoice1.setBackgroundColor(Color.RED);
+                    if (mButtonChoice2.getText() == mAnswer) {
+                        mButtonChoice2.setBackgroundColor(Color.GREEN);
+                        }
+                    if (mButtonChoice3.getText() == mAnswer) {
+                        mButtonChoice3.setBackgroundColor(Color.GREEN);
+                    }
+                    if (mButtonChoice4.getText() == mAnswer) {
+                        mButtonChoice4.setBackgroundColor(Color.GREEN);
+                    }
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+                    mp2.start();
+                    vibrator.vibrate(900);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -98,10 +112,10 @@ public class QuizActivity extends Activity {
                             mButtonChoice2.setEnabled(true);
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
-                            mButtonChoice1.setBackgroundColor(Color.parseColor("#0091EA"));
-                            updateQuestion();
+                            mp2.release();
+                            finish();
                         }
-                    }, 5000);
+                    }, 3000);
                 }
             }
         });
@@ -119,6 +133,8 @@ public class QuizActivity extends Activity {
                     mScore += 1;
                     updateScore(mScore);
                     mButtonChoice2.setBackgroundColor(Color.GREEN);
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+                    mp2.start();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -127,12 +143,25 @@ public class QuizActivity extends Activity {
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
                             mButtonChoice2.setBackgroundColor(Color.parseColor("#0091EA"));
+                            mp2.release();
                             updateQuestion();
                         }
-                    }, 5000);
+                    }, 3000);
 
                 } else {
                     mButtonChoice2.setBackgroundColor(Color.RED);
+                    if (mButtonChoice1.getText() == mAnswer) {
+                        mButtonChoice1.setBackgroundColor(Color.GREEN);
+                    }
+                    if (mButtonChoice3.getText() == mAnswer) {
+                        mButtonChoice3.setBackgroundColor(Color.GREEN);
+                    }
+                    if (mButtonChoice4.getText() == mAnswer) {
+                        mButtonChoice4.setBackgroundColor(Color.GREEN);
+                    }
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+                    mp2.start();
+                    vibrator.vibrate(900);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -140,10 +169,10 @@ public class QuizActivity extends Activity {
                             mButtonChoice2.setEnabled(true);
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
-                            mButtonChoice2.setBackgroundColor(Color.parseColor("#0091EA"));
-                            updateQuestion();
+                            mp2.release();
+                            finish();
                         }
-                    }, 5000);
+                    }, 3000);
                 }
             }
         });
@@ -161,6 +190,8 @@ public class QuizActivity extends Activity {
                     mScore += 1;
                     updateScore(mScore);
                     mButtonChoice3.setBackgroundColor(Color.GREEN);
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+                    mp2.start();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -169,12 +200,25 @@ public class QuizActivity extends Activity {
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
                             mButtonChoice3.setBackgroundColor(Color.parseColor("#0091EA"));
+                            mp2.release();
                             updateQuestion();
                         }
-                    }, 5000);
+                    }, 3000);
 
                 } else {
                     mButtonChoice3.setBackgroundColor(Color.RED);
+                    if (mButtonChoice1.getText() == mAnswer) {
+                        mButtonChoice1.setBackgroundColor(Color.GREEN);
+                    }
+                    if (mButtonChoice2.getText() == mAnswer) {
+                        mButtonChoice2.setBackgroundColor(Color.GREEN);
+                    }
+                    if (mButtonChoice4.getText() == mAnswer) {
+                        mButtonChoice4.setBackgroundColor(Color.GREEN);
+                    }
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+                    mp2.start();
+                    vibrator.vibrate(900);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -182,10 +226,10 @@ public class QuizActivity extends Activity {
                             mButtonChoice2.setEnabled(true);
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
-                            mButtonChoice3.setBackgroundColor(Color.parseColor("#0091EA"));
-                            updateQuestion();
+                            mp2.release();
+                            finish();
                         }
-                    }, 5000);
+                    }, 3000);
                 }
             }
         });
@@ -203,6 +247,8 @@ public class QuizActivity extends Activity {
                     mScore += 1;
                     updateScore(mScore);
                     mButtonChoice4.setBackgroundColor(Color.GREEN);
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+                    mp2.start();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -211,12 +257,25 @@ public class QuizActivity extends Activity {
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
                             mButtonChoice4.setBackgroundColor(Color.parseColor("#0091EA"));
+                            mp2.release();
                             updateQuestion();
                         }
-                    }, 5000);
+                    }, 3000);
 
                 } else {
                     mButtonChoice4.setBackgroundColor(Color.RED);
+                    if (mButtonChoice1.getText() == mAnswer) {
+                        mButtonChoice1.setBackgroundColor(Color.GREEN);
+                    }
+                    if (mButtonChoice2.getText() == mAnswer) {
+                        mButtonChoice2.setBackgroundColor(Color.GREEN);
+                    }
+                    if (mButtonChoice3.getText() == mAnswer) {
+                        mButtonChoice3.setBackgroundColor(Color.GREEN);
+                    }
+                    mp2 = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+                    mp2.start();
+                    vibrator.vibrate(900);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -224,10 +283,10 @@ public class QuizActivity extends Activity {
                             mButtonChoice2.setEnabled(true);
                             mButtonChoice3.setEnabled(true);
                             mButtonChoice4.setEnabled(true);
-                            mButtonChoice4.setBackgroundColor(Color.parseColor("#0091EA"));
-                            updateQuestion();
+                            mp2.release();
+                            finish();
                         }
-                    }, 5000);
+                    }, 3000);
                 }
             }
         });
@@ -241,25 +300,28 @@ public class QuizActivity extends Activity {
     }
 
     private void updateQuestion(){
-        if (mAnsweredQuestions == 11){
-            finish();
+
+        if(mQuestionNumber>=index){
+            mQuestionNumber = 0;
         }
 
-        mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
-        mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber));
-        mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber));
-        mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber));
-        mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber));
+            mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
+            mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber));
+            mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber));
+            mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber));
+            mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber));
 
-        mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber);
-        mQuestionNumber = rnd.nextInt(index);
-        mAnsweredQuestions += 1;
+            mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber);
+            // mQuestionNumber = rnd.nextInt(index);
+            mQuestionNumber += 1;
+            mAnsweredQuestions += 1;
     }
 
     private void updateScore(int point){
         mScoreView.setText("Wynik: " + mScore);
         if (mScore > highScore) {
             highScore = mScore;
+            highScoreView.setText("Najlepszy wynik: " + highScore);
             savePref(highScoreKeyString, highScore);
         }
     }

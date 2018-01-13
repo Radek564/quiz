@@ -13,7 +13,8 @@ public class QuestionLibrary {
             "Pytanie 4",
             "Pytanie 5",
             "Pytanie 6",
-            "Pytanie 7"
+            "Pytanie 7",
+            "Pytanie 8"
 
     };
 
@@ -24,11 +25,12 @@ public class QuestionLibrary {
             {"Opcja 1", "Opcja 2", "Opcja 3", "Opcja 4"},
             {"Opcja 1", "Opcja 2", "Opcja 3", "Opcja 4"},
             {"Opcja 1", "Opcja 2", "Opcja 3", "Opcja 4"},
+            {"Opcja 1", "Opcja 2", "Opcja 3", "Opcja 4"},
             {"Opcja 1", "Opcja 2", "Opcja 3", "Opcja 4"}
 
     };
 
-    private String mCorrectAnswers[] = {"Opcja 1", "Opcja 3", "Opcja 2", "Opcja 4", "Opcja 2", "Opcja 2", "Opcja 1" };
+    private String mCorrectAnswers[] = {"Opcja 1", "Opcja 2", "Opcja 3", "Opcja 4", "Opcja 1", "Opcja 2", "Opcja 3", "Opcja 4" };
 
     public String getQuestion(int a) {
       String question = mQuestions[a];
